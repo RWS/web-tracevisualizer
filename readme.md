@@ -66,6 +66,13 @@ Process Filter
 :	Clear All Processes
 	> Clears all selected process filters.
 
+Building
+-------------
+Most of the dependencies in the project is configured using NuGet. However, the following assembly needs to be placed manually.
+* Tridion.Logging
+
+The assembly can be obtained from a machine where SDL Web Content Manager is installed. It is available in %windir%\Microsoft.NET\assembly.
+
 Support
 -------------
 SDL Web Trace Visualizer is intended as a toolkit to help SDL Tridion community and is not an officially supported SDL product.
@@ -73,7 +80,8 @@ SDL Web Trace Visualizer is intended as a toolkit to help SDL Tridion community 
 Branches and Contributions
 -------------
 * master - Represents the latest stable version. This may be a pre-release version
-* release
+* 8.1 - Represent the version built against SDL Web 8
+* 8.2 - Represent the version built against SDL Web 8.2 (Cloud Only)
 
 License
 -------------
