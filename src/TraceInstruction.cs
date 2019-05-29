@@ -19,7 +19,17 @@ namespace Sdl_Web.TraceVisualizer
         {
             get
             {
-                return _traceChannels ?? new List<TraceChannels> { Tridion.Logging.TraceChannels.DefaultChannel, Tridion.Logging.TraceChannels.TcmChannel, Tridion.Logging.TraceChannels.TtmChannel };
+                if (_traceChannels == null)
+                {
+                    List<TraceChannels> channels = new List<TraceChannels>();
+                    foreach (string channelName in Enum.GetNames(typeof(TraceChannels)))
+                    {
+                        Enum.TryParse(channelName, out TraceChannels channel);
+                        channels.Add(channel);
+                    }
+                    _traceChannels = channels;
+                }
+                return _traceChannels;
             }
             set
             {
@@ -31,7 +41,7 @@ namespace Sdl_Web.TraceVisualizer
         {
             get
             {
-                return _traceKeywords ?? TraceKeywords.Public | TraceKeywords.Extension | TraceKeywords.External;
+                return _traceKeywords ?? TraceKeywords.All;
             }
             set
             {

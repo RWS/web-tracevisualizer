@@ -19,6 +19,43 @@ namespace SdlWeb_TraceVisualizer
             System.Windows.Forms.Application.EnableVisualStyles();
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            InitializeData();
+        }
+
+        private void InitializeData()
+        {
+            foreach (string channelName in Enum.GetNames(typeof(TraceChannels)))
+            {
+                TraceChannelMenuItem.Items.Add(new MenuItem
+                {
+                    IsCheckable = true,
+                    Header = channelName,
+                    Name = channelName,
+                    IsChecked = true
+                });
+            }
+            // TODO: Move all at the end with a separator
+            foreach (string keyword in Enum.GetNames(typeof(TraceKeywords)))
+            {
+                KeywordsMenuItem.Items.Add(new MenuItem
+                {
+                    IsCheckable = true,
+                    Header = keyword,
+                    Name = keyword,
+                    IsChecked = true
+                });
+            }
+
+            foreach (string level in Enum.GetNames(typeof(TraceLevels)))
+            {
+                TraceLevelMenuItem.Items.Add(new MenuItem
+                {
+                    IsCheckable = true,
+                    Header = level,
+                    Name = level,
+                    IsChecked = level == "Verbose"
+                });
+            }
         }
 
         private void NewSession_OnClick(object sender, RoutedEventArgs e)
@@ -50,18 +87,8 @@ namespace SdlWeb_TraceVisualizer
                 MenuItem subMenuItem = item as MenuItem;
                 if (subMenuItem != null && subMenuItem.IsChecked)
                 {
-                    switch (subMenuItem.Name)
-                    {
-                        case "DefaultChannel":
-                            traceChannels.Add(TraceChannels.DefaultChannel);
-                            break;
-                        case "TcmChannel":
-                            traceChannels.Add(TraceChannels.TcmChannel);
-                            break;
-                        case "TtmChannel":
-                            traceChannels.Add(TraceChannels.TtmChannel);
-                            break;
-                    }
+                    Enum.TryParse(subMenuItem.Name, out TraceChannels channel);
+                    traceChannels.Add(channel);
                 }
             }
             TraceKeywords keywords = 0;
@@ -70,27 +97,8 @@ namespace SdlWeb_TraceVisualizer
                 MenuItem subMenuItem = item as MenuItem;
                 if (subMenuItem != null && subMenuItem.IsChecked)
                 {
-                    switch (subMenuItem.Name)
-                    {
-                        case "PublicMenuItem":
-                            keywords |= TraceKeywords.Public;
-                            break;
-                        case "PublicIndirectMenuItem":
-                            keywords |= TraceKeywords.PublicIndirect;
-                            break;
-                        case "InternalMenuItem":
-                            keywords |= TraceKeywords.Internal;
-                            break;
-                        case "DatabaseMenuItem":
-                            keywords |= TraceKeywords.Database;
-                            break;
-                        case "ExtensionMenuItem":
-                            keywords |= TraceKeywords.Extension;
-                            break;
-                        case "ExternalMenuItem":
-                            keywords |= TraceKeywords.External;
-                            break;
-                    }
+                    Enum.TryParse(subMenuItem.Name, out TraceKeywords keyword);
+                    keywords |= keyword;
                 }
             }
             TraceLevels levels = 0;
@@ -99,24 +107,8 @@ namespace SdlWeb_TraceVisualizer
                 MenuItem subMenuItem = item as MenuItem;
                 if (subMenuItem != null && subMenuItem.IsChecked)
                 {
-                    switch (subMenuItem.Name)
-                    {
-                        case "CriticaMenuItem":
-                            levels = TraceLevels.Critical;
-                            break;
-                        case "ErrorMenuItem":
-                            levels = TraceLevels.Error;
-                            break;
-                        case "WarningMenuItem":
-                            levels = TraceLevels.Warning;
-                            break;
-                        case "InformationalMenuItem":
-                            levels = TraceLevels.Informational;
-                            break;
-                        case "VerboseMenuItem":
-                            levels = TraceLevels.Verbose;
-                            break;
-                    }
+                    Enum.TryParse(subMenuItem.Name, out TraceLevels traceLevel);
+                    levels = traceLevel;
                 }
             }
             List<string> processNames = null;
@@ -142,35 +134,6 @@ namespace SdlWeb_TraceVisualizer
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
             EventListenerManager.Instance.StopListening();
-        }
-
-        private void Keyword_OnClick(object sender, RoutedEventArgs e)
-        {
-            MenuItem menuItem = e.Source as MenuItem;
-            if (menuItem == null || menuItem.Name == "KeywordsMenuItem")
-            {
-                return;
-            }
-
-            if (menuItem.Name == "AllKeywordsMenuItem")
-            {
-                foreach (var item in KeywordsMenuItem.Items)
-                {
-                    MenuItem subMenuItem = item as MenuItem;
-                    if (subMenuItem != null)
-                    {
-                        subMenuItem.IsChecked = true;
-                        subMenuItem.IsEnabled = true;
-                    }
-                }
-                AllKeywordsMenuItem.IsEnabled = false;
-            }
-            else
-            {
-                AllKeywordsMenuItem.IsEnabled = true;
-                AllKeywordsMenuItem.IsChecked = false;
-            }
-
         }
 
         private void TraceLevel_OnClick(object sender, RoutedEventArgs e)

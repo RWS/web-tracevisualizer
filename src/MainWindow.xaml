@@ -16,26 +16,10 @@
             </MenuItem>
             <MenuItem Header="_Configuration">
                 <MenuItem Header="Channels" Name="TraceChannelMenuItem">
-                    <MenuItem IsCheckable="true" Header="Default Channel" Name="DefaultChannel" IsChecked="True"/>
-                    <MenuItem IsCheckable="true" Header="Content Manager Channel" Name="TcmChannel" IsChecked="True"/>
-                    <MenuItem IsCheckable="true" Header="Topology Manager Channel" Name="TtmChannel" IsChecked="True"/>
                 </MenuItem>
-                <MenuItem Header="Keywords" Name="KeywordsMenuItem" Click="Keyword_OnClick">
-                    <MenuItem IsCheckable="true" Header="Public" Name="PublicMenuItem" IsChecked="True"/>
-                    <MenuItem IsCheckable="true" Header="Public Indirect" Name="PublicIndirectMenuItem" IsChecked="True"/>
-                    <MenuItem IsCheckable="true" Header="Internal" Name="InternalMenuItem" IsChecked="True"/>
-                    <MenuItem IsCheckable="true" Header="Database" Name="DatabaseMenuItem" IsChecked="True"/>
-                    <MenuItem IsCheckable="true" Header="Extension" Name="ExtensionMenuItem" IsChecked="True"/>
-                    <MenuItem IsCheckable="true" Header="External" Name="ExternalMenuItem" IsChecked="True"/>
-                    <Separator/>
-                    <MenuItem IsCheckable="true" Header="All" Name="AllKeywordsMenuItem" IsChecked="True" IsEnabled="False"/>
+                <MenuItem Header="Keywords" Name="KeywordsMenuItem">
                 </MenuItem>
                 <MenuItem Header="Level" Name="TraceLevelMenuItem" Click="TraceLevel_OnClick">
-                    <MenuItem IsCheckable="true" Header="Critical" Name="CriticaMenuItem"/>
-                    <MenuItem IsCheckable="true" Header="Error" Name="ErrorMenuItem"/>
-                    <MenuItem IsCheckable="true" Header="Warning" Name="WarningMenuItem"/>
-                    <MenuItem IsCheckable="true" Header="Informational" Name="InformationalMenuItem"/>
-                    <MenuItem IsCheckable="true" Header="Verbose"  Name="VerboseMenuItem" IsChecked="True"/>
                 </MenuItem>
                 <MenuItem Header="Process Filter" Name="ProcessFilterMenuItem">
                     <MenuItem Header="Add Process" Click="AddProcessFilter_OnClick" />
